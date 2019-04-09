@@ -1,5 +1,4 @@
 const url = require('url'),
-    AutoUpdater = require('auto-updater'),
     open = require('open'),
     {
         VK
@@ -80,68 +79,6 @@ let tempDataUpdate = {
     tmpPr: null,
     onBrokenEvent: true,
 };
-var autoupdater = new AutoUpdater({
-    checkgit: true
-});
-
-autoupdater.on('git-clone', function() {
-    con("Автоматическое обновление не работает, так как вы клонировали репозиторий! Для автоматического обновления удалите папку .git", "white", "Red");
-});
-autoupdater.on('check.up-to-date', function(v) {
-    con("У вас установлена актуальная версия: " + v, "white", "Green");
-});
-autoupdater.on('check.out-dated', function(v_old, v) {
-    con("У вас устаревшая версия: " + v_old, "white", "Red");
-    if (!autoUpdate && !updateOnce) {
-        con("Актуальная версия: " + v + ". Для ее установки введите команду update", "white", "Red");
-    } else {
-        con("Актуальная версия: " + v + ". Приступаю к обновлению...", "white", "Green");
-        autoupdater.fire('download-update');
-    }
-});
-autoupdater.on('update.downloaded', function() {
-    con("Обновление успешно загружено! Начинаю установку...", "white", "Green");
-    autoupdater.fire('extract');
-});
-autoupdater.on('update.not-installed', function() {
-    con("Обновление уже загружено! Начинаю установку...", "white", "Green");
-    autoupdater.fire('extract');
-});
-autoupdater.on('update.extracted', function() {
-    con("Обновление успешно установлено!", "white", "Green");
-    needRestart = true;
-    let depDiff = autoupdater.fire('diff-dependencies');
-    con("Для применения обновления требуется перезапуск бота!", "white", "Green");
-    if (depDiff.count > 0)
-        con("У обновленной версии были изменены зависимости.", "white", "Red");
-});
-autoupdater.on('download.start', function(name) {
-    con("Начинаю загрузку " + name, "white", "Green");
-});
-autoupdater.on('download.end', function(name) {
-    con("Завершена загрузка " + name, "white", "Green");
-});
-autoupdater.on('download.error', function(err) {
-    con("Возникла ошибка при загрузке: " + err, "white", "Red");
-});
-autoupdater.on('end', function(name, e) {
-    if (checkUpdates) {
-        setTimeout(function() {
-            autoupdater.fire('check');
-        }, updatesInterval * 60 * 1000);
-    }
-    updateOnce = false;
-});
-autoupdater.on('error', function(name, e) {
-    console.error(name, e);
-    if (checkUpdates) {
-        setTimeout(function() {
-            autoupdater.fire('check');
-        }, updatesInterval * 60 * 1000);
-    }
-});
-if (checkUpdates)
-    autoupdater.fire('check');
 
 function notifyToRestart() {
     if (needRestart)
@@ -530,8 +467,7 @@ rl.on('line', async (line) => {
         case 'u':
         case 'upd':
         case 'update':
-            updateOnce = true;
-            autoupdater.fire('check');
+            // nothing
             break;
         case 'au':
         case 'autoupd':
