@@ -1,10 +1,10 @@
 {
-    "disableUpdates": false,
-    "flog": false,
+    "disableUpdates": true,
+    "flog": true,
     "offColors": false,
     "autoBuy": false,
     "autoBuyItems": ["cursor"],
-    "smartBuy": false,
+    "smartBuy": true,
     "waitForBoost": true,
     "numberOfTries": 3,
     "limitCPS": 50000,
