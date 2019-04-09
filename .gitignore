@@ -6,3 +6,6 @@ log.txt
 
 !*.keep
 !**/*.keep
+
+.idea
+.DS_Store
