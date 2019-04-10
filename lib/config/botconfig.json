@@ -13,7 +13,7 @@
     "transferTo": 62802565,
     "transferCoins": 9000001,
     "transferPercent": 0,
-    "transferInterval": 60,
+    "transferInterval": 180,
     "saveIFrameURL": true,
     "authAppType": "android",
     "checkUpdates": true,
